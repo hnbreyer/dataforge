@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "op": "deduplicate"
+    },
+    {
+      "op": "normalize",
+      "columns": [
+        "region",
+        "email"
+      ],
+      "mode": "strip"
+    },
+    {
+      "op": "normalize",
+      "columns": [
+        "region"
+      ],
+      "mode": "upper"
+    },
+    {
+      "op": "normalize",
+      "columns": [
+        "email"
+      ],
+      "mode": "lower"
+    }
+  ]
+}

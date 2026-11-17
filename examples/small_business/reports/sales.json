@@ -1,0 +1,31 @@
+{
+  "group_by": [
+    "month"
+  ],
+  "metrics": [
+    {
+      "op": "count",
+      "name": "lines"
+    },
+    {
+      "op": "sum",
+      "column": "quantity",
+      "name": "units"
+    },
+    {
+      "op": "sum",
+      "column": "net_revenue",
+      "name": "revenue"
+    },
+    {
+      "op": "sum",
+      "column": "cogs",
+      "name": "cogs"
+    },
+    {
+      "op": "sum",
+      "column": "gross_profit",
+      "name": "gross_profit"
+    }
+  ]
+}

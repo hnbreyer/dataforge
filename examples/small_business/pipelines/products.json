@@ -1,0 +1,14 @@
+{
+  "steps": [
+    {
+      "op": "deduplicate"
+    },
+    {
+      "op": "normalize",
+      "columns": [
+        "category"
+      ],
+      "mode": "strip"
+    }
+  ]
+}

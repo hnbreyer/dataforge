@@ -1,0 +1,38 @@
+{
+  "rules": [
+    {
+      "kind": "unique",
+      "column": "product_id"
+    },
+    {
+      "kind": "range",
+      "column": "unit_price",
+      "minimum": "0"
+    },
+    {
+      "kind": "range",
+      "column": "unit_cost",
+      "minimum": "0"
+    },
+    {
+      "kind": "compare",
+      "column": "unit_cost",
+      "other_column": "unit_price",
+      "operator": "le"
+    },
+    {
+      "kind": "allowed",
+      "column": "category",
+      "values": [
+        "Office",
+        "Workshop",
+        "Pantry",
+        "Packaging"
+      ]
+    },
+    {
+      "kind": "duplicate_rows",
+      "severity": "warning"
+    }
+  ]
+}

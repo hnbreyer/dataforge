@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {
+      "op": "filter",
+      "column": "payment_status",
+      "operator": "eq",
+      "value": "paid"
+    }
+  ]
+}

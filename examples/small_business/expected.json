@@ -1,0 +1,86 @@
+{
+  "raw_rows": {
+    "customers": 25,
+    "products": 13,
+    "sales": 150,
+    "inventory_movements": 183,
+    "expenses": 52
+  },
+  "clean_rows": {
+    "customers": 24,
+    "products": 12,
+    "sales": 120,
+    "inventory_movements": 180,
+    "expenses": 48
+  },
+  "validation_issues": {
+    "customers": 4,
+    "products": 3,
+    "sales": 7,
+    "inventory_movements": 4,
+    "expenses": 5
+  },
+  "monthly": [
+    {
+      "month": "2026-01",
+      "lines": 40,
+      "units": 120,
+      "revenue": "1153.50",
+      "cogs": "564.85",
+      "expenses": "2418.00",
+      "paid_expenses": "2381.50",
+      "gross_profit": "588.65",
+      "operating_result": "-1829.35"
+    },
+    {
+      "month": "2026-02",
+      "lines": 40,
+      "units": 120,
+      "revenue": "1152.50",
+      "cogs": "560.50",
+      "expenses": "2450.00",
+      "paid_expenses": "2409.50",
+      "gross_profit": "592.00",
+      "operating_result": "-1858.00"
+    },
+    {
+      "month": "2026-03",
+      "lines": 40,
+      "units": 120,
+      "revenue": "1180.25",
+      "cogs": "578.30",
+      "expenses": "2482.00",
+      "paid_expenses": "2437.50",
+      "gross_profit": "601.95",
+      "operating_result": "-1880.05"
+    }
+  ],
+  "category_revenue": {
+    "Office": "849.50",
+    "Packaging": "999.00",
+    "Pantry": "809.50",
+    "Workshop": "828.25"
+  },
+  "closing_inventory": {
+    "P001": 134,
+    "P002": 132,
+    "P003": 128,
+    "P004": 135,
+    "P005": 126,
+    "P006": 138,
+    "P007": 124,
+    "P008": 132,
+    "P009": 133,
+    "P010": 125,
+    "P011": 131,
+    "P012": 128
+  },
+  "totals": {
+    "revenue": "3486.25",
+    "cogs": "1703.65",
+    "gross_profit": "1782.60",
+    "expenses": "7350.00",
+    "paid_expenses": "7228.50",
+    "operating_result": "-5567.40"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "steps": [
+    {
+      "op": "deduplicate"
+    },
+    {
+      "op": "missing",
+      "columns": [
+        "units_delta"
+      ],
+      "strategy": "drop"
+    },
+    {
+      "op": "filter",
+      "column": "product_id",
+      "operator": "ne",
+      "value": "P999"
+    },
+    {
+      "op": "convert",
+      "column": "units_delta",
+      "type": "integer"
+    },
+    {
+      "op": "sort",
+      "columns": [
+        "date",
+        "movement_id"
+      ]
+    }
+  ]
+}

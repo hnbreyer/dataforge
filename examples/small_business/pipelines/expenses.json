@@ -1,0 +1,33 @@
+{
+  "steps": [
+    {
+      "op": "deduplicate"
+    },
+    {
+      "op": "convert",
+      "column": "date",
+      "type": "date",
+      "on_error": "null"
+    },
+    {
+      "op": "missing",
+      "columns": [
+        "amount",
+        "date"
+      ],
+      "strategy": "drop"
+    },
+    {
+      "op": "filter",
+      "column": "amount",
+      "operator": "ge",
+      "value": "0",
+      "numeric": true
+    },
+    {
+      "op": "convert",
+      "column": "amount",
+      "type": "decimal"
+    }
+  ]
+}

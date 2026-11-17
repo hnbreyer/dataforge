@@ -1,0 +1,27 @@
+{
+  "business": "Juniper Supply (entirely fictional)",
+  "period": "2026-01-01 through 2026-03-31",
+  "currency": "USD",
+  "datasets": [
+    {
+      "name": "customers",
+      "file": "customers.json"
+    },
+    {
+      "name": "products",
+      "file": "products.json"
+    },
+    {
+      "name": "sales",
+      "file": "sales.csv"
+    },
+    {
+      "name": "inventory_movements",
+      "file": "inventory_movements.csv"
+    },
+    {
+      "name": "expenses",
+      "file": "expenses.csv"
+    }
+  ]
+}

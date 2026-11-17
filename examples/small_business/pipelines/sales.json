@@ -1,0 +1,61 @@
+{
+  "steps": [
+    {
+      "op": "deduplicate"
+    },
+    {
+      "op": "convert",
+      "column": "date",
+      "type": "date",
+      "on_error": "null"
+    },
+    {
+      "op": "missing",
+      "columns": [
+        "quantity",
+        "date",
+        "customer_id"
+      ],
+      "strategy": "drop"
+    },
+    {
+      "op": "filter",
+      "column": "quantity",
+      "operator": "ge",
+      "value": "1",
+      "numeric": true
+    },
+    {
+      "op": "filter",
+      "column": "customer_id",
+      "operator": "ne",
+      "value": "C999"
+    },
+    {
+      "op": "filter",
+      "column": "status",
+      "operator": "eq",
+      "value": "completed"
+    },
+    {
+      "op": "convert",
+      "column": "quantity",
+      "type": "integer"
+    },
+    {
+      "op": "calculate",
+      "column": "net_revenue",
+      "expression": "quantity * unit_price - discount_amount"
+    },
+    {
+      "op": "calculate",
+      "column": "cogs",
+      "expression": "quantity * unit_cost"
+    },
+    {
+      "op": "calculate",
+      "column": "gross_profit",
+      "expression": "net_revenue - cogs"
+    }
+  ]
+}

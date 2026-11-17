@@ -1,0 +1,53 @@
+expense_id,date,month,category,vendor,amount,payment_status,currency,receipt_reference
+E0001,2026-01-01,2026-01,Rent,Fictional Vendor 1,800.00,paid,USD,R0001
+E0002,2026-01-02,2026-01,Utilities,Fictional Vendor 2,95.50,paid,USD,R0002
+E0003,2026-01-03,2026-01,Marketing,Fictional Vendor 3,120.00,paid,USD,R0003
+E0004,2026-01-04,2026-01,Shipping,Fictional Vendor 4,28.75,paid,USD,R0004
+E0005,2026-01-05,2026-01,Software,Fictional Vendor 5,39.00,paid,USD,R0005
+E0006,2026-01-06,2026-01,Insurance,Fictional Vendor 6,65.00,paid,USD,R0006
+E0007,2026-01-07,2026-01,Travel,Fictional Vendor 7,42.50,paid,USD,R0007
+E0008,2026-01-08,2026-01,Office supplies,Fictional Vendor 8,18.25,unpaid,USD,R0008
+E0009,2026-01-09,2026-01,Rent,Fictional Vendor 1,800.00,paid,USD,R0009
+E0010,2026-01-10,2026-01,Utilities,Fictional Vendor 2,95.50,paid,USD,R0010
+E0011,2026-01-11,2026-01,Marketing,Fictional Vendor 3,120.00,paid,USD,R0011
+E0012,2026-01-12,2026-01,Shipping,Fictional Vendor 4,28.75,paid,USD,R0012
+E0013,2026-01-13,2026-01,Software,Fictional Vendor 5,39.00,paid,USD,R0013
+E0014,2026-01-14,2026-01,Insurance,Fictional Vendor 6,65.00,paid,USD,R0014
+E0015,2026-01-15,2026-01,Travel,Fictional Vendor 7,42.50,paid,USD,R0015
+E0016,2026-01-16,2026-01,Office supplies,Fictional Vendor 8,18.25,unpaid,USD,R0016
+E0017,2026-02-01,2026-02,Rent,Fictional Vendor 1,802.00,paid,USD,R0017
+E0018,2026-02-02,2026-02,Utilities,Fictional Vendor 2,97.50,paid,USD,R0018
+E0019,2026-02-03,2026-02,Marketing,Fictional Vendor 3,122.00,paid,USD,R0019
+E0020,2026-02-04,2026-02,Shipping,Fictional Vendor 4,30.75,paid,USD,R0020
+E0021,2026-02-05,2026-02,Software,Fictional Vendor 5,41.00,paid,USD,R0021
+E0022,2026-02-06,2026-02,Insurance,Fictional Vendor 6,67.00,paid,USD,R0022
+E0023,2026-02-07,2026-02,Travel,Fictional Vendor 7,44.50,paid,USD,R0023
+E0024,2026-02-08,2026-02,Office supplies,Fictional Vendor 8,20.25,unpaid,USD,R0024
+E0025,2026-02-09,2026-02,Rent,Fictional Vendor 1,802.00,paid,USD,R0025
+E0026,2026-02-10,2026-02,Utilities,Fictional Vendor 2,97.50,paid,USD,R0026
+E0027,2026-02-11,2026-02,Marketing,Fictional Vendor 3,122.00,paid,USD,R0027
+E0028,2026-02-12,2026-02,Shipping,Fictional Vendor 4,30.75,paid,USD,R0028
+E0029,2026-02-13,2026-02,Software,Fictional Vendor 5,41.00,paid,USD,R0029
+E0030,2026-02-14,2026-02,Insurance,Fictional Vendor 6,67.00,paid,USD,R0030
+E0031,2026-02-15,2026-02,Travel,Fictional Vendor 7,44.50,paid,USD,R0031
+E0032,2026-02-16,2026-02,Office supplies,Fictional Vendor 8,20.25,unpaid,USD,R0032
+E0033,2026-03-01,2026-03,Rent,Fictional Vendor 1,804.00,paid,USD,R0033
+E0034,2026-03-02,2026-03,Utilities,Fictional Vendor 2,99.50,paid,USD,R0034
+E0035,2026-03-03,2026-03,Marketing,Fictional Vendor 3,124.00,paid,USD,R0035
+E0036,2026-03-04,2026-03,Shipping,Fictional Vendor 4,32.75,paid,USD,R0036
+E0037,2026-03-05,2026-03,Software,Fictional Vendor 5,43.00,paid,USD,R0037
+E0038,2026-03-06,2026-03,Insurance,Fictional Vendor 6,69.00,paid,USD,R0038
+E0039,2026-03-07,2026-03,Travel,Fictional Vendor 7,46.50,paid,USD,R0039
+E0040,2026-03-08,2026-03,Office supplies,Fictional Vendor 8,22.25,unpaid,USD,R0040
+E0041,2026-03-09,2026-03,Rent,Fictional Vendor 1,804.00,paid,USD,R0041
+E0042,2026-03-10,2026-03,Utilities,Fictional Vendor 2,99.50,paid,USD,R0042
+E0043,2026-03-11,2026-03,Marketing,Fictional Vendor 3,124.00,paid,USD,R0043
+E0044,2026-03-12,2026-03,Shipping,Fictional Vendor 4,32.75,paid,USD,R0044
+E0045,2026-03-13,2026-03,Software,Fictional Vendor 5,43.00,paid,USD,R0045
+E0046,2026-03-14,2026-03,Insurance,Fictional Vendor 6,69.00,paid,USD,R0046
+E0047,2026-03-15,2026-03,Travel,Fictional Vendor 7,46.50,paid,USD,R0047
+E0048,2026-03-16,2026-03,Office supplies,Fictional Vendor 8,22.25,unpaid,USD,R0048
+E0005,2026-01-05,2026-01,Software,Fictional Vendor 5,39.00,paid,USD,R0005
+E0901,2026-01-01,2026-01,Rent,Fictional Vendor 1,,paid,USD,R0001
+E0902,2026-13-01,2026-01,Rent,Fictional Vendor 1,800.00,paid,USD,R0001
+E0903,2026-01-01,2026-01,Rent,Fictional Vendor 1,-25.00,paid,USD,R0001

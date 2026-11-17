@@ -1,0 +1,32 @@
+{
+  "rules": [
+    {
+      "kind": "unique",
+      "column": "expense_id"
+    },
+    {
+      "kind": "required",
+      "column": "amount"
+    },
+    {
+      "kind": "range",
+      "column": "amount",
+      "minimum": "0"
+    },
+    {
+      "kind": "date",
+      "column": "date"
+    },
+    {
+      "kind": "allowed",
+      "column": "currency",
+      "values": [
+        "USD"
+      ]
+    },
+    {
+      "kind": "duplicate_rows",
+      "severity": "warning"
+    }
+  ]
+}

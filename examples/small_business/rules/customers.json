@@ -1,0 +1,31 @@
+{
+  "rules": [
+    {
+      "kind": "required",
+      "column": "customer_id"
+    },
+    {
+      "kind": "unique",
+      "column": "customer_id"
+    },
+    {
+      "kind": "required",
+      "column": "email",
+      "severity": "warning"
+    },
+    {
+      "kind": "allowed",
+      "column": "region",
+      "values": [
+        "NORTH",
+        "SOUTH",
+        "EAST",
+        "WEST"
+      ]
+    },
+    {
+      "kind": "duplicate_rows",
+      "severity": "warning"
+    }
+  ]
+}

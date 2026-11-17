@@ -1,25 +1,45 @@
 # Baseline verification
 
-Verified on 2026-11-17 with Python 3.14.2. The dependency versions are recorded in
-`requirements-dev.lock`. All tests and manual workflows used temporary data;
-there is no normal `.dataforge` directory in the project after verification.
+Compatibility and business-example checks were rerun on 2026-11-17 using isolated
+Python environments. Dependency versions remain recorded in `requirements-dev.lock`.
+All tests and example CLI checks used temporary workspaces; no import command
+was pointed at the developer's default workspace.
 
-| Check | Result |
+| Python | Complete pytest suite | Result |
+|---|---|---|
+| 3.12.3 | `python -m pytest -q` | **177 passed in 30.21 seconds**, zero failures |
+| 3.13.8 | `python -m pytest -q` | **177 passed in 32.93 seconds**, zero failures |
+| 3.14.2 | `python -m pytest -q` | **177 passed in 32.44 seconds**, zero failures |
+
+The three suites ran concurrently in separate processes, with separate temporary
+databases/files. Before the fix, importing `dataforge.workspace` on Python 3.12
+and 3.13 raised `TypeError: 'function' object is not subscriptable` in
+`DatasetService.load`. Its annotation evaluated `list` as the earlier class method
+rather than the built-in container. `from __future__ import annotations` defers
+that evaluation on these versions; public import, annotation-resolution, CLI,
+API, migration, and service tests now pass across the matrix. CI runs the same
+Python 3.12/3.13/3.14 matrix.
+
+| Additional current check | Result |
 |---|---|
-| Editable project and development dependencies installed | Passed |
-| `python -m pip check` | No broken requirements |
-| Fresh Alembic upgrade, repeat upgrade, and downgrade/upgrade test | Passed |
+| Runtime/development dependencies installed on all three interpreters | Passed |
+| Dependency consistency (`pip check`) on all three interpreters | No broken requirements |
+| Fresh Alembic upgrade, repeat upgrade, downgrade/upgrade tests | Passed in each suite |
 | Migrated SQLite schema compared with SQLAlchemy metadata | No differences |
 | `ruff check src tests scripts` | Passed |
-| `ruff format --check src tests scripts` | 38 files already formatted |
-| `pytest -q` | **156 passed in 8.92 seconds**, zero failures |
-| `python -m compileall -q src` | Passed |
-| `python scripts/verify_examples.py` | Passed |
-| Noneditable wheel installation into a temporary target | Passed |
-| Installed-package migration, import, report, templates, CSS checks | Passed |
-| Actual Uvicorn startup on loopback | Passed |
-| Live HTTP dashboard/API checks and full processing workflow | Passed |
+| `ruff format --check src tests scripts` | 42 files already formatted |
+| `python scripts/verify_examples.py` on all three interpreters | Passed; original small sample workflow unchanged |
+| `python scripts/generate_business_examples.py --check` | 26 deterministic files verified |
+| Business importer run into a new temporary workspace | Passed; 423 source records, 12 datasets, 7 reports |
+| Existing directory/file/workspace/symlink refusal | Passed; existing bytes preserved |
+| Original sample source/configuration files compared with Git baseline | No changes |
 | `git diff --check` | Passed |
+
+The earlier baseline additionally verified a noneditable wheel installation,
+packaged templates/CSS/migrations, compilation, actual Uvicorn startup, and live
+HTTP import/processing/dashboard routes. Those historical checks are retained
+below; the current compatibility check reran the complete automated API/web and
+migration suites on all three interpreters.
 
 ## What the checks cover
 
@@ -52,6 +72,21 @@ definitions, pagination, origin/host protection, and offline OpenAPI docs. Web
 tests submit forms, follow redirects, verify populated/empty/error pages, escaping,
 search pagination, and deletion. Browser layout was not visually inspected.
 
+Business-example tests import the optional bundle through the shared services,
+verify raw source bytes, expected issue counts and cleaned outputs, and independently
+read committed CSV files with standard-library Decimal arithmetic. They reconcile
+customer/product references, transaction price snapshots, monthly/category revenue,
+COGS, gross profit, operating expenses, paid expenses, and every sales stock-out.
+Closing inventory is checked both as a grouped report and as an aggregate pipeline
+output. Acceptance totals are revenue **3,486.25**, COGS **1,703.65**, gross profit
+**1,782.60**, expenses **7,350.00**, paid expenses **7,228.50**, operating result
+**-5,567.40**, and **1,566 closing units**. Rebuilding into a second isolated directory
+produces identical artifact checksums and analytical results. Tests also block
+network connection attempts, verify that `DATAFORGE_HOME` is ignored, and reject
+reruns against existing destinations without modifying their files.
+
+## Earlier live-server verification
+
 The live server check returned HTTP 200 for `/`, `/datasets`, `/import`,
 `/validations`, `/pipelines`, `/reports`, `/definitions`, `/imports`, `/docs`,
 `/openapi.json`, and `/api/v1/health`. It imported a real fixture, validated it,
@@ -72,6 +107,7 @@ python3 -m venv .venv
 .venv/bin/ruff format --check src tests scripts
 .venv/bin/pytest -q
 .venv/bin/python scripts/verify_examples.py
+.venv/bin/python scripts/generate_business_examples.py --check
 .venv/bin/python scripts/count_source.py
 ```
 
@@ -87,10 +123,10 @@ sandbox. These restrictions do not require application changes.
 
 | Area | Physical lines | Nonblank lines | Files |
 |---|---:|---:|---:|
-| Application Python, Jinja2, and CSS | 4,409 | 3,854 | 44 |
-| Python tests | 1,210 | 1,015 | 7 |
-| Verification/count scripts | 98 | 84 | 2 |
-| **Total** | **5,717** | **4,953** | **53** |
+| Application Python, Jinja2, and CSS | 4,411 | 3,855 | 44 |
+| Python tests | 1,559 | 1,318 | 9 |
+| Example/verification/count scripts | 717 | 663 | 4 |
+| **Total** | **6,687** | **5,836** | **57** |
 
 This counts source and tests only. Dependencies, virtual environments, caches,
 build artifacts, generated migration revisions, documentation, configuration,

@@ -1,0 +1,16 @@
+{
+  "group_by": [
+    "month"
+  ],
+  "metrics": [
+    {
+      "op": "count",
+      "name": "entries"
+    },
+    {
+      "op": "sum",
+      "column": "amount",
+      "name": "expenses"
+    }
+  ]
+}

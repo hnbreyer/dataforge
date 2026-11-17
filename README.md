@@ -9,8 +9,8 @@ requirements.
 
 ## Quick start
 
-Requires Python **3.12+**. The baseline is verified on Python 3.14. Installation
-requires package-index access; all operations then work offline.
+Requires Python **3.12+**. The suite is verified on Python 3.12, 3.13, and 3.14.
+Installation requires package-index access; all operations then work offline.
 
 ```bash
 python3 -m venv .venv
@@ -199,6 +199,32 @@ dataforge dataset delete clean-sales --yes
 dataforge dataset delete sales --yes
 ```
 
+## Optional small-business workspace
+
+The original small samples remain available. A separate, entirely fictional
+**Juniper Supply** bundle adds **423 records** across related sales, customers,
+products, inventory movements, and expenses for January–March 2026. It includes
+intentional quality issues, saved rule/pipeline/report definitions, independent
+expected results, and stock/revenue/expense reconciliation.
+
+```bash
+# Requires a NEW, nonexistent directory; never uses the default workspace.
+python scripts/import_business_examples.py --home /tmp/juniper-dataforge-demo
+dataforge --home /tmp/juniper-dataforge-demo serve
+# Check deterministic committed example files without changing anything:
+python scripts/generate_business_examples.py --check
+```
+
+The importer refuses every existing path (even an empty directory or symlink),
+requires explicit `--home`, and ignores `DATAFORGE_HOME`. It preserves raw source
+bytes and creates 12 source/derived datasets, 10 validation runs, 7 jobs, and 7
+reports in the new workspace. Examples remain opt-in; startup and initialization
+never import them. Runtime workflows work entirely offline after installation.
+See the [business example guide](examples/small_business/README.md) for a full
+quality-issue ledger, formulas, monthly figures, inventory balances, and CLI
+workflows. Acceptance totals include revenue **3,486.25**, gross profit
+**1,782.60**, operating expenses **7,350.00**, and closing inventory **1,566 units**.
+
 ## REST API
 
 Run `dataforge serve`. No server is needed for CLI workflows. The versioned API
@@ -242,6 +268,7 @@ make test                          # Complete isolated pytest suite
 ruff check src tests scripts
 ruff format --check src tests scripts
 pytest
+python scripts/generate_business_examples.py --check
 python scripts/verify_examples.py     # Real CLI commands in a temporary workspace
 
 dataforge init                     # Idempotent upgrade for configured workspace
@@ -260,6 +287,10 @@ The frozen initial revision does not call ORM `create_all` and is included in
 installed wheels. `requirements-dev.lock` records the verified environment; use
 `pip install -r requirements-dev.lock` followed by `pip install -e . --no-deps`
 when reproducing it on a compatible Python/platform.
+
+The CI matrix runs Python 3.12, 3.13, and 3.14. Deferred annotations in the dataset
+service prevent its `list` method from shadowing the built-in container type on
+Python 3.12/3.13; compatibility tests import all public interfaces and check CLI help.
 
 Every test uses a pytest temporary directory or temporary `--home`. Tests do not
 modify developer data. HTTPX tests run the real ASGI lifespan, migration, request

@@ -1,0 +1,16 @@
+{
+  "group_by": [
+    "category"
+  ],
+  "metrics": [
+    {
+      "op": "count",
+      "name": "products"
+    },
+    {
+      "op": "avg",
+      "column": "unit_price",
+      "name": "average_price"
+    }
+  ]
+}

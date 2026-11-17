@@ -1,0 +1,17 @@
+{
+  "steps": [
+    {
+      "op": "aggregate",
+      "group_by": [
+        "product_id"
+      ],
+      "metrics": [
+        {
+          "op": "sum",
+          "column": "units_delta",
+          "name": "closing_units"
+        }
+      ]
+    }
+  ]
+}

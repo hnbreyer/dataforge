@@ -1,0 +1,11 @@
+{
+  "group_by": [
+    "region"
+  ],
+  "metrics": [
+    {
+      "op": "count",
+      "name": "customers"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "group_by": [
+    "month"
+  ],
+  "metrics": [
+    {
+      "op": "sum",
+      "column": "amount",
+      "name": "paid_expenses"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import dataset_table, jobs_table %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<p class="eyebrow">DATA, WITH A CLEAR TRAIL</p>
+<h1>Workspace overview</h1>
+<p class="muted">Import, refine, and understand your data. All in one local workspace.</p>
+</div>
+<a class="button" href="/import">+ Import dataset</a>
+</div>
+<div class="stats">
+  {% for label, value, note in [('Datasets', summary.datasets, 'Immutable sources and outputs'), ('Total records', summary.rows, 'Across all dataset versions'), ('Pipeline runs', summary.jobs, summary.failed_jobs|string + ' failed executions'), ('Reports', summary.reports, 'Saved, reproducible results')] %}
+  <article class="stat">
+<span>{{ label }}</span>
+<strong>{{ '{:,}'.format(value) }}</strong>
+<small>{{ note }}</small>
+</article>
+{% endfor %}
+</div>
+<section class="card">
+<div class="section-heading">
+<h2>Recent datasets</h2>
+<a href="/datasets">View all →</a>
+</div>{{ dataset_table(recent['items']) }}</section>
+<div class="two-col">
+<section class="card">
+<div class="section-heading">
+<h2>Processing activity</h2>
+<a href="/pipelines">Pipelines →</a>
+</div>{{ jobs_table(jobs['items']) }}</section>
+<section class="card guide">
+<p class="eyebrow">A REPRODUCIBLE WORKFLOW</p>
+<h2>From raw records<br>to useful answers.</h2>
+<ol>
+<li>
+<strong>Bring your data</strong>
+<span>Import CSV or JSON. Keep the original intact.</span>
+</li>
+<li>
+<strong>Check and refine</strong>
+<span>Validate records and run structured pipelines.</span>
+</li>
+<li>
+<strong>Share the result</strong>
+<span>Generate profiles and export your summaries.</span>
+</li>
+</ol>
+<a href="/definitions">Manage reusable definitions →</a>
+</section>
+</div>
+{% endblock %}

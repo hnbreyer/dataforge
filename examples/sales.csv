@@ -1,0 +1,6 @@
+id,category,amount,quantity,date,customer
+1,Office,10.10,2,2026-01-01,Ana
+2,Office,20.20,1,2026-01-02,Bo
+3,Food,3.30,3,2026-01-03,
+3,Food,3.30,3,2026-01-03,
+4,Food,,1,bad-date,Dee

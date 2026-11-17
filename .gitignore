@@ -221,3 +221,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# DataForge local state
+.dataforge/
+.venv/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite*
+exports/
+htmlcov/
+.coverage
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.env

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import pager as pagination %}
+{% block title %}Definitions{% endblock %}
+{% block breadcrumb %}Definitions{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Reusable definitions</h1>
+<p class="muted">Save configurations once. Reuse them through every interface.</p>
+</div>
+</div>
+<div class="tabs">
+{% for k in ['validation','pipeline','report'] %}
+<a href="/definitions?kind={{ k }}" {% if k == kind %}aria-current="page"{% endif %}>{{ k|capitalize }}</a>
+{% endfor %}
+</div>
+<details class="card padded">
+<summary>Save a {{ kind }} definition</summary>
+<form method="post" action="/definitions">
+<input type="hidden" name="kind" value="{{ kind }}">
+<label>Name<input name="name" maxlength="120" required>
+</label>
+<label>Configuration (JSON)<textarea name="config" rows="8" required spellcheck="false">
+</textarea>
+</label>
+<button>Save definition</button>
+</form>
+</details>
+{% for d in page['items'] %}
+<details class="card padded">
+<summary>{{ d.name }} <small>{{ d.id[:8] }}</small>
+</summary>
+<pre>{{ d.config|tojson(indent=2) }}</pre>
+</details>
+{% else %}
+<section class="card empty">
+<h3>No {{ kind }} definitions</h3>
+<p>Save a configuration to make future runs reproducible and convenient.</p>
+</section>
+{% endfor %}{{ pagination(pager, page) }}{% endblock %}

@@ -1,0 +1,110 @@
+{% macro pager(pager, page) %}
+<div class="pagination">
+<span>{{ page.total }} total · showing {{ page.offset + 1 if page.total > page.offset else 0 }}–{{ [page.offset + page.limit, page.total]|min }}</span>
+<div>
+{% if pager.previous %}
+<a href="{{ pager.previous }}">← Previous</a>
+{% endif %}
+{% if pager.next %}
+<a href="{{ pager.next }}">Next →</a>
+{% endif %}
+</div>
+</div>
+{% endmacro %}
+{% macro dataset_table(items) %}
+{% if items %}
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Rows</th>
+<th>Source</th>
+<th>Imported (UTC)</th>
+</tr>
+</thead>
+<tbody>
+{% for d in items %}
+<tr>
+<td>
+<a class="strong" href="/datasets/{{ d.id }}">{{ d.name }}</a>
+<small>{{ d.id[:8] }}</small>
+</td>
+<td class="numeric">{{ '{:,}'.format(d.row_count) }}</td>
+<td>{{ d.source_filename }}</td>
+<td>{{ d.created_at[:19]|replace('T',' ') }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<div class="empty">
+<span class="empty-icon">▤</span>
+<h3>No datasets yet</h3>
+<p>Import a CSV or JSON file to start exploring your data.</p>
+<a class="button" href="/import">Import dataset</a>
+</div>
+{% endif %}
+{% endmacro %}
+{% macro jobs_table(items) %}
+{% if items %}
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>Status</th>
+<th>Started (UTC)</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+{% for j in items %}
+<tr>
+<td>
+<a href="/jobs/{{ j.id }}">{{ j.id[:8] }}</a>
+</td>
+<td>
+<span class="badge {{ j.status }}">{{ j.status }}</span>
+</td>
+<td>{{ j.started_at[:19]|replace('T',' ') }}</td>
+<td>
+{% if j.output_id %}
+<a href="/datasets/{{ j.output_id }}">View dataset →</a>
+{% else %}—{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<div class="empty">
+<h3>No pipeline executions</h3>
+<p>Build a sequence of transformations to create a new dataset.</p>
+</div>
+{% endif %}
+{% endmacro %}
+{% macro configuration(definitions, placeholder) %}
+<label>Saved definition <select name="definition">
+<option value="">Use JSON below</option>
+{% for d in definitions %}
+<option value="{{ d.id }}">{{ d.name }}</option>
+{% endfor %}
+</select>
+</label>
+<label>Configuration (JSON)<textarea name="config" rows="7" placeholder="{{ placeholder }}" spellcheck="false">
+</textarea>
+</label>
+<p class="hint">Enter JSON or choose a saved definition. Leave the JSON field empty when using a definition.</p>
+{% endmacro %}
+{% macro dataset_input(datasets) %}
+<label>Input dataset<input name="dataset" list="dataset-options" required placeholder="Dataset name or UUID">
+<datalist id="dataset-options">
+{% for d in datasets %}
+<option value="{{ d.id }}">{{ d.name }}</option>
+{% endfor %}
+</datalist>
+</label>
+{% endmacro %}

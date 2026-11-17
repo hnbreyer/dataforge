@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>
+{% block title %}Workspace{% endblock %} · DataForge</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='app.css') }}">
+</head>
+<body>
+  <aside>
+    <a class="brand" href="/">
+<span class="mark">D</span> DataForge</a>
+    <p class="eyebrow">YOUR WORKSPACE</p>
+    <nav aria-label="Main navigation">
+      {% for path, label in [('/', 'Overview'), ('/datasets', 'Datasets'), ('/validations', 'Validation'), ('/pipelines', 'Pipelines'), ('/reports', 'Reports'), ('/definitions', 'Definitions'), ('/imports', 'Import history')] %}
+      <a href="{{ path }}" {% if request.url.path == path or path != '/' and request.url.path.startswith(path + '/') %}aria-current="page"{% endif %}>{{ label }}</a>
+      {% endfor %}
+    </nav>
+    <div class="aside-bottom">
+<span class="dot">
+</span> Local workspace<br>
+<small>Your data stays on this device.</small>
+<a href="/docs">API documentation ↗</a>
+</div>
+  </aside>
+  <main>
+<header class="topbar">
+<span>Workspace <span class="muted">/</span> {% block breadcrumb %}Overview{% endblock %}
+</span>
+<span class="pill">LOCAL</span>
+</header>
+    <div class="content">
+{% block content %}
+{% endblock %}
+</div>
+    <footer>DataForge · Reproducible data, from source to summary.</footer>
+  </main>
+</body>
+</html>

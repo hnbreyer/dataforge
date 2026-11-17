@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import pager as pagination %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>{{ title }}</h1>
+<p class="muted">{{ subtitle }}</p>
+</div>
+<a class="button secondary" href="/datasets">Choose a dataset →</a>
+</div>
+<section class="card">
+{% if page['items'] %}
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Dataset</th>
+<th>Result</th>
+<th>Issues</th>
+<th>Created (UTC)</th>
+</tr>
+</thead>
+<tbody>
+{% for r in page['items'] %}
+<tr>
+<td>
+<a href="/validations/{{ r.id }}">{{ r.id[:8] }}</a>
+</td>
+<td>
+<a href="/datasets/{{ r.dataset_id }}">{{ r.dataset_id[:8] }}</a>
+</td>
+<td>
+<span class="badge {{ 'succeeded' if r.passed else 'failed' }}">{{ 'Passed' if r.passed else 'Failed' }}</span>
+</td>
+<td>{{ r.issue_count }}</td>
+<td>{{ r.created_at[:19]|replace('T',' ') }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<div class="empty">
+<h3>No validation runs yet</h3>
+<p>Open a dataset and run your first set of rules.</p>
+<a href="/datasets">Browse datasets →</a>
+</div>
+{% endif %}{{ pagination(pager, page) }}</section>
+{% endblock %}

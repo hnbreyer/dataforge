@@ -1,0 +1,11 @@
+{
+  "rules": [
+    {"kind": "required", "column": "id"},
+    {"kind": "unique", "column": "id"},
+    {"kind": "required", "column": "amount"},
+    {"kind": "numeric", "column": "amount"},
+    {"kind": "range", "column": "amount", "minimum": "0"},
+    {"kind": "date", "column": "date", "format": "%Y-%m-%d"},
+    {"kind": "duplicate_rows", "severity": "warning"}
+  ]
+}

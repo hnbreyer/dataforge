@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import pager as pagination %}
+{% block title %}Validation result{% endblock %}
+{% block breadcrumb %}
+<a href="/validations">Validation</a> / {{ run.id[:8] }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Validation result</h1>
+<p class="muted">{{ run.issue_count }} issues · <a href="/datasets/{{ run.dataset_id }}">View dataset →</a>
+</p>
+</div>
+<span class="badge {{ 'succeeded' if run.passed else 'failed' }}">{{ 'Passed' if run.passed else 'Failed' }}</span>
+</div>
+<section class="card">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Rule</th>
+<th>Column</th>
+<th>Severity</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+{% for i in run.issues['items'] %}
+<tr>
+<td>{{ i.row }}</td>
+<td>{{ i.rule }}</td>
+<td>{{ i.column or 'Entire row' }}</td>
+<td>
+<span class="badge {{ 'failed' if i.severity == 'error' else 'warning' }}">{{ i.severity }}</span>
+</td>
+<td>{{ i.description }}</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="5">No issues on this page.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>{{ pagination(pager, run.issues) }}</section>
+<details class="card padded">
+<summary>Exact rule configuration</summary>
+<pre>{{ run.config|tojson(indent=2) }}</pre>
+</details>
+{% endblock %}

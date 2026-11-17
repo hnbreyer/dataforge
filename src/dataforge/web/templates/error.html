@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Unable to complete operation{% endblock %}
+{% block content %}
+<section class="card padded error-state">
+<p class="eyebrow">REQUEST {{ status }}</p>
+<h1>Unable to complete this operation</h1>
+<p class="error-box">{{ message }}</p>
+<p>Check your input and try again. The error details identify the rejected operation.</p>
+<a class="button secondary" href="/">Return to workspace</a>
+</section>
+{% endblock %}

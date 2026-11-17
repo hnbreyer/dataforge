@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import pager as pagination, configuration, dataset_input %}
+{% block title %}Reports{% endblock %}
+{% block breadcrumb %}Reports{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Reports</h1>
+<p class="muted">Profiles, exact totals, and grouped summaries from your stored data.</p>
+</div>
+</div>
+<details class="card padded" open>
+<summary>Generate a report</summary>
+<form method="post" action="/reports">{{ dataset_input(datasets) }}{{ configuration(definitions, '{"group_by":["category"],"metrics":[{"op":"sum","column":"amount","name":"total"}]}') }}<p class="hint">Leave the configuration empty for a complete dataset profile.</p>
+<button>Generate report →</button>
+</form>
+</details>
+<section class="card">
+{% if page['items'] %}
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Report</th>
+<th>Dataset</th>
+<th>Created (UTC)</th>
+<th>Export</th>
+</tr>
+</thead>
+<tbody>
+{% for r in page['items'] %}
+<tr>
+<td>
+<a href="/reports/{{ r.id }}">{{ r.id[:8] }}</a>
+</td>
+<td>
+<a href="/datasets/{{ r.dataset_id }}">{{ r.dataset_id[:8] }}</a>
+</td>
+<td>{{ r.created_at[:19]|replace('T',' ') }}</td>
+<td>
+<a href="/api/v1/reports/{{ r.id }}/export?format=json">JSON ↓</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<div class="empty">
+<h3>No reports yet</h3>
+<p>Generate a report to discover missing values, numeric statistics, and category frequencies.</p>
+</div>
+{% endif %}{{ pagination(pager, page) }}</section>
+{% endblock %}

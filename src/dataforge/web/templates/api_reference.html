@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}API reference{% endblock %}
+{% block breadcrumb %}API reference{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<p class="eyebrow">OPENAPI {{ spec.openapi }}</p>
+<h1>API reference</h1>
+<p class="muted">{{ spec.info.description }}</p>
+</div>
+<a class="button secondary" href="/openapi.json">OpenAPI JSON ↗</a>
+</div>
+<p>All endpoints below use <code>/api/v1</code>. Upload files as multipart form data; send configurations as JSON. This reference works offline. See the README for complete curl examples.</p>
+{% for path, methods in spec.paths.items() %}
+{% for method, operation in methods.items() %}
+<details class="card padded">
+<summary>
+<span class="badge">{{ method|upper }}</span> <code>{{ path }}</code> · {{ operation.summary }}</summary>
+{% if operation.description %}
+<p>{{ operation.description }}</p>
+{% endif %}
+{% if operation.parameters %}
+<h2>Parameters</h2>
+<pre>{{ operation.parameters|tojson(indent=2) }}</pre>
+{% endif %}
+{% if operation.requestBody %}
+<h2>Request body</h2>
+<pre>{{ operation.requestBody|tojson(indent=2) }}</pre>
+{% endif %}
+<h2>Responses</h2>
+<pre>{{ operation.responses|tojson(indent=2) }}</pre>
+</details>
+{% endfor %}
+{% endfor %}
+<h2>Schema definitions</h2>
+{% for name, schema in spec.components.schemas.items() %}
+<details class="card padded">
+<summary>{{ name }}</summary>
+<pre>{{ schema|tojson(indent=2) }}</pre>
+</details>
+{% endfor %}
+{% endblock %}

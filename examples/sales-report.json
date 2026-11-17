@@ -1,0 +1,10 @@
+{
+  "group_by": ["category"],
+  "metrics": [
+    {"op": "count", "name": "records"},
+    {"op": "sum", "column": "line_total", "name": "total"},
+    {"op": "avg", "column": "line_total", "name": "average"},
+    {"op": "min", "column": "line_total", "name": "minimum"},
+    {"op": "max", "column": "line_total", "name": "maximum"}
+  ]
+}

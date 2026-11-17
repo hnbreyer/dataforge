@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Report {{ report.id[:8] }}{% endblock %}
+{% block breadcrumb %}
+<a href="/reports">Reports</a> / {{ report.id[:8] }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Dataset profile</h1>
+<p class="muted">{{ report.result.row_count }} rows · {{ report.result.column_count }} columns · <a href="/datasets/{{ report.dataset_id }}">Source dataset →</a>
+</p>
+</div>
+<div class="actions">
+<a class="button secondary" href="/api/v1/reports/{{ report.id }}/export?format=json">Export JSON</a>
+<a class="button secondary" href="/api/v1/reports/{{ report.id }}/export?format=csv">Export groups CSV</a>
+</div>
+</div>
+<section class="card">
+<div class="section-heading">
+<h2>Column statistics</h2>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Missing</th>
+<th>Distinct</th>
+<th>Numeric count</th>
+<th>Non-numeric</th>
+<th>Total</th>
+<th>Average</th>
+<th>Minimum</th>
+<th>Maximum</th>
+</tr>
+</thead>
+<tbody>
+{% for name, c in report.result.columns.items() %}
+<tr>
+<td class="strong">{{ name }}</td>
+<td>{{ c.missing }}</td>
+<td>{{ c.distinct }}</td>
+<td>{{ c.numeric.count if c.numeric else 0 }}</td>
+<td>{{ c.numeric_invalid }}</td>
+<td>{{ c.numeric.sum if c.numeric else '—' }}</td>
+<td>{{ c.numeric.avg if c.numeric else '—' }}</td>
+<td>{{ c.numeric.min if c.numeric else '—' }}</td>
+<td>{{ c.numeric.max if c.numeric else '—' }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<div class="section-heading">
+<h2>Grouped summary</h2>
+</div>
+{% if report.result.groups %}
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+{% for c in report.result.groups[0] %}
+<th>{{ c }}</th>
+{% endfor %}
+</tr>
+</thead>
+<tbody>
+{% for r in report.result.groups %}
+<tr>
+{% for value in r.values() %}
+<td>{{ value if value is not none else '—' }}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<p class="padded">No groups in this output.</p>
+{% endif %}
+</section>
+<section class="card padded">
+<h2>Category frequencies</h2>
+<div class="frequency-grid">
+{% for name, c in report.result.columns.items() %}
+<details>
+<summary>{{ name }}</summary>
+<ul>
+{% for f in c.frequencies %}
+<li>{{ f.value }} <strong>{{ f.count }}</strong>
+</li>
+{% endfor %}
+</ul>
+</details>
+{% endfor %}
+</div>
+</section>
+<p class="hint">{{ report.result.decimal_policy }}. Numeric column statistics exclude nonnumeric values; grouped numeric metrics reject them.</p>
+<details class="card padded">
+<summary>Report definition</summary>
+<pre>{{ report.config|tojson(indent=2) }}</pre>
+</details>
+{% endblock %}

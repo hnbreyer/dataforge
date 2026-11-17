@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import pager as pagination %}
+{% block title %}Import history{% endblock %}
+{% block breadcrumb %}Import history{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Import history</h1>
+<p class="muted">Successful imports and rejected files, with clear error details.</p>
+</div>
+<a class="button" href="/import">+ Import dataset</a>
+</div>
+<section class="card">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>File</th>
+<th>Status</th>
+<th>Created (UTC)</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+{% for i in page['items'] %}
+<tr>
+<td>
+{% if i.dataset_id %}
+<a href="/datasets/{{ i.dataset_id }}">{{ i.requested_name }}</a>
+{% else %}{{ i.requested_name }}{% endif %}
+</td>
+<td>{{ i.filename }}</td>
+<td>
+<span class="badge {{ i.status }}">{{ i.status }}</span>
+</td>
+<td>{{ i.created_at[:19]|replace('T',' ') }}</td>
+<td>{{ i.error or 'Source preserved' }}</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="5">No imports yet.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>{{ pagination(pager, page) }}</section>
+{% endblock %}

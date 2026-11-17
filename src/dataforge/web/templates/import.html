@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Import dataset{% endblock %}
+{% block breadcrumb %}Import{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Import a dataset</h1>
+<p class="muted">Start with a local file. DataForge preserves an exact copy of your source.</p>
+</div>
+</div>
+<div class="two-col">
+<section class="card padded">
+<form action="/import" method="post" enctype="multipart/form-data">
+<label>Dataset name<input name="name" maxlength="120" required placeholder="e.g. November sales">
+</label>
+<label>Source file<input type="file" name="file" accept=".csv,.json" required>
+</label>
+<p class="hint">UTF-8 CSV with a header, or a JSON array of flat objects. Default limit: 25 MiB and 100,000 rows.</p>
+<button>Import dataset →</button>
+</form>
+</section>
+<section class="card padded">
+<h2>A transparent import policy</h2>
+<ul class="policy">
+<li>Blank strings and JSON null become missing values.</li>
+<li>Duplicates are retained until you explicitly remove them.</li>
+<li>Malformed records reject the entire import.</li>
+<li>Financial decimals are preserved as exact strings.</li>
+<li>Your original file is never modified.</li>
+</ul>
+<a href="/imports">See import history →</a>
+</section>
+</div>
+{% endblock %}

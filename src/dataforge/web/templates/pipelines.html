@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import jobs_table, pager as pagination, configuration, dataset_input %}
+{% block title %}Pipelines{% endblock %}
+{% block breadcrumb %}Pipelines{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Pipelines</h1>
+<p class="muted">Structured transformations. New outputs. A complete execution trail.</p>
+</div>
+</div>
+<details class="card padded" open>
+<summary>Run a pipeline</summary>
+<form method="post" action="/pipelines">{{ dataset_input(datasets) }}<label>Output dataset name<input name="output_name" maxlength="120" required placeholder="e.g. clean-sales">
+</label>{{ configuration(definitions, '{"steps":[{"op":"deduplicate"}]}') }}<button>Run pipeline →</button>
+</form>
+</details>
+<section class="card">
+<div class="section-heading">
+<h2>Execution history</h2>
+<span class="muted">Synchronous, atomic processing</span>
+</div>{{ jobs_table(page['items']) }}{{ pagination(pager, page) }}</section>
+{% endblock %}

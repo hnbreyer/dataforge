@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import pager as pagination, configuration %}
+{% block title %}{{ dataset.name }}{% endblock %}
+{% block breadcrumb %}
+<a href="/datasets">Datasets</a> / {{ dataset.name }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<p class="eyebrow">DATASET</p>
+<h1>{{ dataset.name }}</h1>
+<p class="muted">{{ dataset.source_filename }} · {{ dataset.row_count }} rows · {{ dataset.columns|length }} columns</p>
+</div>
+<div class="actions">
+<a class="button secondary" href="/api/v1/datasets/{{ dataset.id }}/export?format=csv">Export CSV</a>
+<a class="button secondary" href="/api/v1/datasets/{{ dataset.id }}/export?format=json">Export JSON</a>
+</div>
+</div>
+<div class="metadata">
+<span>Imported {{ dataset.created_at[:19]|replace('T',' ') }} UTC</span>
+<span>ID <code>{{ dataset.id }}</code>
+</span>
+{% if dataset.parent_id %}
+<a href="/datasets/{{ dataset.parent_id }}">Source dataset →</a>
+{% else %}
+<a href="/api/v1/datasets/{{ dataset.id }}/source">Download original source</a>
+{% endif %}
+</div>
+<section class="card">
+<div class="section-heading">
+<h2>Data preview</h2>
+<span class="muted">Original order · missing values shown as —</span>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Record</th>
+{% for c in dataset.columns %}
+<th>{{ c.name }}<small>{{ c.inferred_type }} · {{ c.missing_count }} missing</small>
+</th>
+{% endfor %}
+</tr>
+</thead>
+<tbody>
+{% for row in preview['items'] %}
+<tr>
+<td class="muted">{{ preview.offset + loop.index }}</td>
+{% for c in preview.columns %}
+<td>{{ row[c] if row[c] is not none else '—' }}</td>
+{% endfor %}
+</tr>
+{% else %}
+<tr>
+<td colspan="{{ dataset.columns|length + 1 }}">This dataset has no records on this page.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>{{ pagination(pager, preview) }}</section>
+<div class="two-col">
+<section class="card padded">
+<h2>Validate these records</h2>
+<p class="muted">Run checks without changing any data.</p>
+<form method="post" action="/datasets/{{ dataset.id }}/validate">{{ configuration(definitions, '{"rules":[{"kind":"required","column":"id"}]}') }}<button>Run validation</button>
+</form>
+</section>
+<section class="card padded">
+<h2>Dataset provenance</h2>
+<p class="muted">SHA-256 checksum</p>
+<code class="checksum">{{ dataset.checksum }}</code>
+<p>To transform this data, use a pipeline. Each successful execution creates a new dataset.</p>
+<a href="/pipelines">Open pipelines →</a>
+<details class="danger-zone">
+<summary>Delete dataset</summary>
+<p>Dependencies protect datasets used in validation, jobs, reports, or derived datasets.</p>
+<form method="post" action="/datasets/{{ dataset.id }}/delete">
+<label class="check">
+<input type="checkbox" name="confirm" value="true" required> Permanently delete this dataset and its stored files</label>
+<button class="danger">Delete dataset</button>
+</form>
+</details>
+</section>
+</div>
+{% endblock %}

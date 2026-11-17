@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"op": "deduplicate"},
+    {"op": "missing", "columns": ["amount"], "strategy": "drop"},
+    {"op": "normalize", "columns": ["category"], "mode": "lower"},
+    {"op": "convert", "column": "quantity", "type": "integer"},
+    {"op": "calculate", "column": "line_total", "expression": "amount * quantity"},
+    {"op": "sort", "columns": ["line_total"], "numeric": true, "descending": true}
+  ]
+}

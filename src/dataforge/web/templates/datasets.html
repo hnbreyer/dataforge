@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import dataset_table, pager as pagination %}
+{% block title %}Datasets{% endblock %}
+{% block breadcrumb %}Datasets{% endblock %}
+{% block content %}
+<div class="page-heading">
+<div>
+<h1>Datasets</h1>
+<p class="muted">Original imports and transformed outputs, with their provenance preserved.</p>
+</div>
+<a class="button" href="/import">+ Import dataset</a>
+</div>
+<form method="get" class="search">
+<label class="sr-only" for="search">Search datasets</label>
+<input id="search" name="search" value="{{ search }}" placeholder="Search datasets by name…">
+<button class="secondary">Search</button>
+</form>
+<section class="card">{{ dataset_table(page['items']) }}{{ pagination(pager, page) }}</section>
+{% endblock %}
